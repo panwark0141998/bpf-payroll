@@ -15,11 +15,11 @@ export const config = {
   mobileUrl: process.env.MOBILE_URL || 'http://localhost:3001',
 
   // Database & Supabase
-  databaseUrl: process.env.DATABASE_URL || '',
+  databaseUrl: process.env.DATABASE_URL || 'postgresql://postgres.llorazdgdoqcxnecizfx:BPFbpf%4099672@aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres',
   pgDataDir: process.env.PGLITE_DATA_DIR || path.resolve(process.cwd(), 'data/pglite_db'),
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '',
-  supabasePublishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY || '',
-  supabaseSecretKey: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || '',
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://llorazdgdoqcxnecizfx.supabase.co',
+  supabasePublishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY || 'sb_publishable_LZMYrdbk-BEKK-v2hnn-Og_1Uv8Ve4I',
+  supabaseSecretKey: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || 'sb_secret_cQ0Qfghaq6NhHQuRj9yvkA_W4mO9bIF',
 
   // JWT & Security
   jwtSecret: process.env.JWT_SECRET || 'bpf_super_secret_jwt_access_token_key_2026_x89f',
