@@ -14,7 +14,7 @@
     "dev:api": "npm --prefix apps/api run dev",
     "dev:desktop": "npm --prefix apps/desktop run dev",
     "dev:mobile": "npm --prefix apps/mobile run dev",
-    "build": "npm run build --workspaces && node scripts/prepare-deployment.js",
+    "build": "npm --prefix packages/shared-types run build && npm --prefix packages/validation run build && npm --prefix apps/api run build && npm --prefix apps/desktop run build && npm --prefix apps/mobile run build && node scripts/prepare-deployment.js",
     "bundle:deploy": "node scripts/prepare-deployment.js",
     "test": "npm --prefix apps/api test"
   },
@@ -32,6 +32,8 @@
   "license": "PROPRIETARY",
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.116.0"
+    "@supabase/supabase-js": "^2.116.0",
+    "localtunnel": "^2.0.2",
+    "untun": "^0.2.2"
   }
 }
