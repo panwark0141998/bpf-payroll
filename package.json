@@ -1,0 +1,37 @@
+{
+  "name": "bpf-payroll-monorepo",
+  "version": "1.0.0",
+  "description": "BPF Payroll: Enterprise Windows Desktop Payroll & Mobile Face Attendance System",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "migrate": "npm --prefix apps/api run migrate",
+    "seed": "npm --prefix apps/api run seed",
+    "dev:api": "npm --prefix apps/api run dev",
+    "dev:desktop": "npm --prefix apps/desktop run dev",
+    "dev:mobile": "npm --prefix apps/mobile run dev",
+    "build": "npm run build --workspaces && node scripts/prepare-deployment.js",
+    "bundle:deploy": "node scripts/prepare-deployment.js",
+    "test": "npm --prefix apps/api test"
+  },
+  "keywords": [
+    "payroll",
+    "face-attendance",
+    "hrms",
+    "electron",
+    "react",
+    "express",
+    "postgresql",
+    "biometric"
+  ],
+  "author": "BPF Engineering Team",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0"
+  }
+}
