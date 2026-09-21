@@ -5,10 +5,18 @@ import { z } from 'zod';
 // ============================================================================
 export const LoginSchema = z.object({
   companyCode: z.string().min(2, 'Company code is required').max(50),
-  usernameOrEmail: z.string().min(3, 'Username or Email is required'),
+  usernameOrEmail: z.string().optional(),
+  username: z.string().optional(),
+  email: z.string().optional(),
   password: z.string().min(6, 'Password must be at least 6 characters'),
   rememberMe: z.boolean().optional().default(false),
   deviceId: z.string().optional()
+}).transform((data) => ({
+  ...data,
+  usernameOrEmail: (data.usernameOrEmail || data.username || data.email || '').trim()
+})).refine((data) => data.usernameOrEmail.length >= 3, {
+  message: 'Username or Email is required',
+  path: ['usernameOrEmail']
 });
 
 export const MobileLoginSchema = z.object({

@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { config } from './config/index.js';
@@ -115,6 +116,30 @@ app.get('/api/audit/logs', authenticateToken, async (req, res, next) => {
     next(err);
   }
 });
+
+// Serve compiled Desktop and Mobile web apps
+const distPath = path.resolve(process.cwd(), 'dist');
+const altDistPath = path.resolve(process.cwd(), '../../dist');
+const resolvedDist = fs.existsSync(distPath) ? distPath : (fs.existsSync(altDistPath) ? altDistPath : null);
+
+if (resolvedDist) {
+  const mobileDistPath = path.join(resolvedDist, 'mobile');
+  if (fs.existsSync(mobileDistPath)) {
+    app.use('/mobile', express.static(mobileDistPath));
+    app.get(['/mobile', '/mobile/*'], (req, res, next) => {
+      if (req.path.startsWith('/api')) return next();
+      res.sendFile(path.join(mobileDistPath, 'index.html'));
+    });
+  }
+
+  app.use(express.static(resolvedDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next();
+    }
+    res.sendFile(path.join(resolvedDist, 'index.html'));
+  });
+}
 
 // Global Error Handler
 app.use(errorHandler);
