@@ -121,3 +121,45 @@ npm run dev:mobile
 - **Desktop ERP**: Visit `http://localhost:3000`
 - **Mobile App**: Visit `http://localhost:3001`
 - **Backend API**: Running on `http://localhost:5000/api/health`
+
+---
+
+## Deploying to Vercel (Going Live)
+
+The monorepo is fully configured for zero-configuration, unified deployment on Vercel:
+- **Desktop ERP Portal**: Served at `/`
+- **Mobile Face Attendance Web App**: Served at `/mobile`
+- **REST API (Serverless)**: Served at `/api/*`
+
+### Method 1: Deploy with Git (Recommended)
+
+1. Push your changes to GitHub (already pushed to `https://github.com/panwark0141998/bpf-payroll.git`).
+2. Log in to [vercel.com](https://vercel.com) and click **"Add New..." > "Project"**.
+3. Import the repository **`panwark0141998/bpf-payroll`**.
+4. Configure Project Settings:
+   - **Framework Preset**: Other
+   - **Root Directory**: `./` (Default)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+5. In **Environment Variables**, add:
+   - `DATABASE_URL`: `postgresql://postgres.llorazdgdoqcxnecizfx:BPFbpf%4099672@aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres`
+   - `NODE_ENV`: `production`
+   - `JWT_SECRET`: `bpf_super_secret_jwt_access_token_key_2026_x89f`
+   - `JWT_REFRESH_SECRET`: `bpf_super_secret_jwt_refresh_token_key_2026_z12m`
+   - `COOKIE_SECRET`: `bpf_cookie_secure_signer_9921_secret`
+   - `ENCRYPTION_KEY`: `0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef`
+   - `NEXT_PUBLIC_SUPABASE_URL`: `https://llorazdgdoqcxnecizfx.supabase.co`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: `sb_publishable_LZMYrdbk-BEKK-v2hnn-Og_1Uv8Ve4I`
+   - `SUPABASE_SERVICE_ROLE_KEY`: `sb_secret_cQ0Qfghaq6NhHQuRj9yvkA_W4mO9bIF`
+6. Click **Deploy**.
+
+### Method 2: Deploy using Vercel CLI
+
+```powershell
+# 1. Authenticate with Vercel:
+npx vercel login
+
+# 2. Deploy to production:
+npx vercel --prod
+```
+
