@@ -28,10 +28,12 @@ export async function getDbClient() {
                        config.databaseUrl.includes('aws') ||
                        config.databaseUrl.includes('sslmode=require') ||
                        process.env.NODE_ENV === 'production';
+      // Strip sslmode from query string if present to prevent pg from overriding rejectUnauthorized
+      const cleanConnString = config.databaseUrl.replace(/[?&]sslmode=[^&]+/g, '');
       pgPool = new Pool({
-        connectionString: config.databaseUrl,
+        connectionString: cleanConnString,
         ssl: isRemote ? { rejectUnauthorized: false } : undefined,
-        max: 20,
+        max: 10,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 10000
       });
